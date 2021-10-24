@@ -33,7 +33,7 @@
                 <img v-bind:src="album.cover_big" v-bind:id="album.id">
             </div>
         </div>
-        <button id="finalize" v-on:click="saveCanvas" v-if="picks.length>=1 &&!showCanvas">Get the picture.</button>
+        <button id="finalize" v-on:click="saveCanvas" v-if="picks.length>=0 &&!showCanvas">Generate the image.</button>
     </div>
     <canvas width="600" height="680" id="can" style="display: none;"></canvas>
     <script>
@@ -54,7 +54,7 @@
                     document.getElementById('can').style.display='block'
                     var canvas = document.getElementById("can");
                     var img    = canvas.toDataURL("image/png");
-                    document.write('<img src="'+img+'"/>');
+                    document.write('<img crossorigin="anonymous" src="'+img+'"/>');
                 },
                 getWidth:function(index) {
                     all=this.picks.length

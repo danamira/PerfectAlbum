@@ -88,6 +88,7 @@ h1 {
 .one {
     padding: 10px;
     float: left;
+    width: 33% !important;
 }
 .one img {
     border-radius: 4px;
@@ -118,4 +119,12 @@ h4 {
 #can {
     margin:40px auto;
     display: block;
+}
+@media only screen and (max-width: 600px) {
+    .container {
+        width: 100% !important;
+    }
+  }
+#can {
+    width: 100% !important;
 }
