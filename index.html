@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Perfect Album Doesn't Exis-</title>
+    <link rel="stylesheet" href="CSS/all.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container" id="app">
+        <h1 v-if="!showCanvas">Let's look for your favorites</h1>
+        <div class="search" v-if="picks.length<=8 && !showCanvas" id="search">
+            <input type="text" v-model="query" placeholder="Enter the name of an album...">
+            <button v-on:click="call">Search</button>
+        </div>
+        <div v-if="searched && !showCanvas">
+            <h3>Top results:</h3>
+            <div>
+                <div class="album" v-for="album in result">
+                    <img v-bind:src="album.cover">
+                    <h3>{{album.title}}</h3>
+                    <span class="artist">{{album.artist.name}}</span>
+                    <button v-on:click="pick(album)">Pick</button>
+                </div>
+            </div>
+        </div>
+        <div class="out" v-if="!showCanvas">
+            <div class="one" v-for="(album,index) in picks" v-bind:style='"width:"+getWidth(index)'>
+                <img v-bind:src="album.cover_big" v-bind:id="album.id">
+            </div>
+        </div>
+        <button id="finalize" v-on:click="saveCanvas" v-if="picks.length>=3 &&!showCanvas">Get the picture.</button>
+    </div>
+    <canvas width="600" height="680" id="can" style="display: none;"></canvas>
+    <script>
+        let app = new Vue({
+            el:'#app',
+            data:{
+                query:'',
+                searched:false,
+                result:[],
+                picks:[],
+                containerSize:600,
+                index:0,
+                showCanvas:0,
+            },
+            methods:{
+                saveCanvas:function() {
+                    this.showCanvas=1;
+                    document.getElementById('can').style.display='block'
+                },
+                getWidth:function(index) {
+                    all=this.picks.length
+                    oWidth=this.containerSize
+                    return "200px"
+                },
+                call:function() {
+                    me=this
+                    let query="https://api.allorigins.win/get?url=https://api.deezer.com/search/album?q="+this.query
+                    result=axios.get(query).then(function(result) {
+                        data=JSON.parse(result.data.contents)
+                        console.log(data)
+                        me.result=data.data.slice(0,4)
+                        me.searched=1
+                        console.log(data)
+                    }).catch(function(error) {
+                        console.log("WE HAVE AN ERROR!")
+                        console.log(error)
+                    })
+                },
+                pick:function(album){
+                    this.picks.push(album);
+                    this.query='';
+                    var c = document.getElementById('can');
+                    var t = c.getContext('2d');
+                    var img = new Image;
+                    if(this.index==0) {
+                        t.font = "28px Arial";
+                        t.fillText("- : Perfect album doesn't exi...", 10, 50);
+                    }
+                    left=200*(this.index%3)
+                    mtop=200*parseInt((this.index)/3)+80
+                    this.index+=1
+                    console.log(mtop)
+                    img.onload = function(){
+                        t.drawImage(img,left,mtop,200,200);
+                    };
+                    img.src = album.cover_big;
+                    this.searched=false
+                }
+
+            }
+        })
+        
+    </script>
+</body>
+</html>
