@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="container" id="app">
-        <h1 v-if="!showCanvas">Let's look for your favorites</h1>
+        <h1 v-if="!showCanvas">Let's look for your favorites(Pick 9)</h1>
         <div class="search" v-if="picks.length<=8 && !showCanvas" id="search">
             <input type="text" v-model="query" placeholder="Enter the name of an album...">
             <button v-on:click="call">Search</button>
@@ -33,7 +33,7 @@
                 <img v-bind:src="album.cover_big" v-bind:id="album.id">
             </div>
         </div>
-        <button id="finalize" v-on:click="saveCanvas" v-if="picks.length>=0 &&!showCanvas">Generate the image.</button>
+        <button id="finalize" v-on:click="saveCanvas" v-if="picks.length>=9 &&!showCanvas">Generate the image.</button>
     </div>
     <canvas width="600" height="680" id="can" style="display: none;"></canvas>
     <script>
