@@ -2,7 +2,7 @@
 	<img src="https://raw.githubusercontent.com/devdana/PerfectAlbum/main/Sample.png" width="400"/>
 </p>
 <h2>"Perfect Album Doesn't Exi..." Meme generator</h2>
-<p>Use it online <a href="https://devdana.github.io/PerfectAlbum/">Here.</a>
+<p>Use it online <a href="https://danamira.github.io/PerfectAlbum/">Here.</a>
 </br>
 This is simple music meme creator based on album covers fetched from <a href="https://www.deezer.com/en/">Deezer API.</a>
 I also have used <a href="https://allorigins.win/">allOrigins</a> proxy to resolve the CORS conflict made with Deezers API response
